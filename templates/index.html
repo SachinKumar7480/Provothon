@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Code Review App</title>
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <h1>Code Review App</h1>
+  
+  <form id="codeForm" action="{{ url_for('submit_code') }}" method="POST">
+    <label for="codeInput">Paste your code:</label>
+    <textarea id="codeInput" name="code" rows="10" cols="50"></textarea>
+    <button type="submit">Submit</button>
+  </form>
+
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
+
+  <!-- index.html -->
+<!-- Add a loading spinner to show the processing state -->
+<div id="loadingSpinner" class="hidden"></div>
+
+<!-- script.js -->
+// Show the loading spinner during code submission
+const loadingSpinner = document.getElementById('loadingSpinner');
+
+codeForm.addEventListener('submit', (event) => {
+  event.preventDefault();
+  const code = codeInput.value;
+  codeInput.value = '';
+
+  loadingSpinner.classList.remove('hidden'); // Show the loading spinner
+
+  fetch('/submit', {
+    method: 'POST',
+    body: new URLSearchParams({
+      code: code
+    })
+  })
+    .then(response => response.text())
+    .then(data => {
+      document.getElementById('reviewReport').innerHTML = data;
+      loadingSpinner.classList.add('hidden'); // Hide the loading spinner
+    })
+    .catch(error => {
+      console.error('Error:', error);
+      loadingSpinner.classList.add('hidden'); // Hide the loading spinner in case of error
+    });
+});
+
+</body>
+</html>

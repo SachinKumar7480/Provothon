@@ -1,0 +1,23 @@
+body {
+    font-family: Arial, sans-serif;
+  }
+  
+  h1 {
+    text-align: center;
+  }
+  
+  form {
+    text-align: center;
+    margin-top: 20px;
+  }
+  
+  textarea {
+    width: 100%;
+  }
+  
+  #reviewReport {
+    margin-top: 20px;
+    border: 1px solid #ccc;
+    padding: 10px;
+  }
+  
